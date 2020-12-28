@@ -1,0 +1,28 @@
+﻿@model List<Naras_Kitchen.ViewModels.WeeklyMenuViewModel>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<table class="table" id="table" style="margin:2%;">
+    <thead>
+        <tr>
+
+            <th scope="col">Day</th>
+            <th scope="col">Recipe</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var menu in Model) 
+        {
+            <tr>
+                <td>@menu.Day</td>
+                <td>@menu.Recipe.Title</td>
+                <td><a class="btn btn-primary" asp-action="CheckIngredients" asp-route-recipeId="@menu.RecipeId">Check Ingredients</a></td>
+                <td><a asp-action="RemoveFromWeeklyMenu" asp-route-recipeId="@menu.RecipeId" asp-route-day="@menu.Day"class=" btn btn-danger">Remove from weekly menu!</a></td>
+            </tr>
+        }
+   </tbody>
+    </table>
+ 

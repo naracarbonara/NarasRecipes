@@ -1,0 +1,455 @@
+﻿@model Naras_Kitchen.ViewModels.DetailsViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+
+@{
+    ViewData["Title"] = "Detailss";
+}
+
+
+<h2>Detailss</h2>
+
+<div>
+
+    @if (Model != null)
+    {
+
+        <img style="width:100%" src="@Model.ImageUrl" />
+        <h2 style="text-align:center">
+            @Model.Title
+        </h2>
+        @if (User.Identity.IsAuthenticated)
+        {
+            var userId = UserManager.GetUserId(User);
+
+            var query = Model.Ratings.Where(x => x.UserId == userId && x.RecipeId == Model.Id).ToList();
+            if (query.Count == 0)
+            {
+                <h2>
+                    <div style="display:flex;flex-direction:row;justify-content:center">
+                        <form asp-controller="Ratings" asp-action="Add" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>1</textarea>
+                            </div>
+                            @if (Model.AvgRating > 1.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="1"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="1"></i></button>
+
+                            }
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Add" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>2</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 1.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="2"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="2"></i></button>
+
+                            }
+
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Add" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>3</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 2.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="3"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="3"></i></button>
+
+                            }
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Add" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>4</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 3.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="4"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="4"></i></button>
+
+                            }
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Add" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>5</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 4.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="5"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="5"></i></button>
+
+                            }
+                        </form>
+                        @*<i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" onclick="TurnYellowStar(event)" id="1" ></i>
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" onclick="TurnYellowStar(event)" id="2"></i>
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" onclick="TurnYellowStar(event)" id="3"></i>
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" onclick="TurnYellowStar(event)" id="4"></i>
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" onclick="TurnYellowStar(event)" id="5"></i>*@
+                    </div>
+                </h2>
+
+            }
+            else
+            {
+                <h2>
+                    <div style="display:flex;flex-direction:row;justify-content:center">
+                        <form asp-controller="Ratings" asp-action="Edit" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>1</textarea>
+                            </div>
+                            @if (Model.AvgRating > 1.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="1"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="1"></i></button>
+
+                            }
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Edit" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>2</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 1.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="2"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="2"></i></button>
+
+                            }
+
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Edit" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>3</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 2.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="3"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="3"></i></button>
+
+                            }
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Edit" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>4</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 3.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="4"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="4"></i></button>
+
+                            }
+                        </form>
+                        <form asp-controller="Ratings" asp-action="Edit" method="post">
+                            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+                            <div class="form-group">
+                                <textarea name="value" class="form-control" hidden>5</textarea>
+                            </div>
+                            @if (Model.AvgRating >= 4.5)
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow" id="5"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn"><i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer" id="5"></i></button>
+
+                            }
+                        </form>
+                    
+                    </div>
+                </h2>
+            }
+
+
+
+        }
+
+    }
+
+    <h4 id="avgRating" style="display:none">@Model.AvgRating</h4>
+    <h6 style="text-align:center">@Model.Country</h6>
+    <h6 style="text-align:center">@Model.Type</h6>
+    <p style="text-align:center">@Model.Description</p>
+    <h3 style="text-align:center">Ingredients:</h3>
+
+    <a class="btn btn-success" onclick="addIngredient()">+</a> <b>Add Ingredient</b>
+
+    <form asp-action="CreateIngredient" method="post">
+
+        <div class="form-group">
+            <input asp-for="@Model.Id" class="form-control" hidden name="recipeId" />
+            <table class="table" id="table" style="margin:2%;">
+                <thead>
+                    <tr>
+                        @*<th scope="col">#</th>*@
+                        <th scope="col">Ingredient</th>
+                        <th scope="col">Quantity</th>
+                        @*<th scope="col">Validate Ingredient</th>*@
+                        <th scope="col">Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="body">
+                </tbody>
+
+                @foreach (var ingredient in Model.Ingredients)
+                {
+                    <tr>
+                        <td>@ingredient.Name</td>
+                        <td>@ingredient.Quantity</td>
+                        @if (ingredient.Name != null)
+                        {
+                            <td><a asp-action="DeleteIngredient" asp-route-id="@ingredient.Id"><i class="fa fa-trash" aria-hidden="true" style="cursor:pointer;"></i></a></td>
+                        }
+
+                    </tr>
+                }
+
+
+
+            </table>
+        </div>
+        <br />
+    </form>
+    <h3 style="text-align:center">Directions:</h3>
+    <p style="text-align:center">@Model.Directions</p>
+    <a style="margin: 0 auto;width:20%" class="btn btn-primary" asp-action="CreateWeeklyMenu" asp-route-recipeId="@Model.Id">Add to weekly Menu?</a>
+
+
+
+
+</div>
+<div>
+    @if (Model.UserId == UserManager.GetUserId(User))
+    {
+        <div style="display:flex; flex-direction:row; justify-content:center">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Recipe</a>  |  <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete Recipe</a> <br />
+        </div>
+    }
+
+    <h2>Comments</h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-controller="Comments" asp-action="Add" method="post">
+            <input id="recipeId" name="recipeId" value="@Model.Id" hidden />
+            <div class="form-group">
+                <textarea id="comment" name="commentText" class="form-control"> </textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
+    }
+
+    @foreach (var comment in Model.Comments)
+    {
+        <p>@comment.CommentText - @comment.DateCreated - @comment.UserName</p>
+    }
+    @*<div style="display:flex;justify-content:flex-start; margin-top:5%">
+        </div>*@
+    <a asp-action="Home">Back to List</a>
+</div>
+
+
+<script>
+
+
+    function addIngredient() {
+
+
+        var body = document.getElementById("body");
+        var row = document.createElement("tr");
+        //var dataNum = document.createElement("td");
+        var dataIng = document.createElement("td");
+        var dataQuant = document.createElement("td");
+
+        var dataDel = document.createElement("td");
+        var dataValidate = document.createElement("td");
+        body.appendChild(row);
+        //row.appendChild(dataNum);
+        row.appendChild(dataIng);
+        row.appendChild(dataQuant);
+
+        row.appendChild(dataDel);
+        row.appendChild(dataValidate);
+        var inputIng = document.createElement("input");
+        inputIng.name = "ingredient";
+        var inputQuant = document.createElement("input");
+        inputQuant.name = "quantity"
+        var buttonValidate = document.createElement("button");
+        buttonValidate.type = "submit";
+        buttonValidate.className = "btn btn-success";
+
+        var text = document.createTextNode("Validate Ingredient");
+        buttonValidate.appendChild(text)
+        //var iconValidate = document.createElement("i");
+        //iconValidate.className = "fa fa-check"
+        //iconValidate.style.cursor = "pointer";
+        //iconValidate.type = "submit";
+
+        var icon = document.createElement("i");
+        icon.className = "fa fa-trash";
+        icon.style.cursor = "pointer";
+        icon.onclick = function (e) {
+            var t = e.target;
+            var data = t.parentElement;
+            var row = data.parentElement;
+            row.remove();
+        }
+
+
+        dataValidate.appendChild(buttonValidate);
+        dataDel.appendChild(icon);
+        dataIng.appendChild(inputIng);
+        dataQuant.appendChild(inputQuant);
+
+        //var previousRow = row.previousElementSibling;
+        //var value = 0;
+        //if (previousRow == null) {
+        //    value = 0
+        //}
+        //else {
+        //    value = previousRow.firstElementChild.innerText;
+        //}
+
+        //dataNum.innerText = (parseInt(value) + 1).toString();
+
+    }
+
+
+ 
+      
+</script>
+
+
+    @*function TurnYellowStar(e) {
+        var one = document.getElementById("1");
+        var two = document.getElementById("2");
+        var three = document.getElementById("3");
+        var four = document.getElementById("4");
+        var five = document.getElementById("5");
+        var t = e.target;
+        if (t.id == "1") {
+            if (t.className == "fa fa-star-o") {
+                t.style.color = "yellow";
+                t.className = "fa fa-star"
+            }
+            else if (t.className == "fa fa-star" && two.style.color == "yellow"){
+                //t.style.color = "black";
+                //t.className = "fa fa-star-o"
+                two.style.color = "black"
+                two.className = "fa fa-star-o"
+                three.style.color = "black"
+                three.className = "fa fa-star-o"
+                four.style.color = "black"
+                four.className = "fa fa-star-o"
+                five.style.color = "black"
+                five.className = "fa fa-star-o"
+            }
+              else if (t.className == "fa fa-star" && two.style.color =="black") {
+               t.style.color = "black";
+                t.className = "fa fa-star-o"
+
+            }
+
+
+        }
+
+        else if (t.id == "2") {
+            t.className == "fa fa-star";
+         t.style.color = "yellow";
+            t.className = "fa fa-star";
+            one.style.color = "yellow";
+            one.className = "fa fa-star";
+            three.style.color = "black";
+            three.className = "fa fa-star-o".className = "fa fa-star-o";
+            four.style.color = "black";
+            four.className = "fa fa-star-o";
+            five.style.color = "black";
+            five.style.color = "black";
+            five.className = "fa fa-star-o".className = "fa fa-star-o";
+
+
+        }
+        else if (t.id == "3") {
+            t.className == "fa fa-star";
+            t.style.color = "yellow";
+            t.className = "fa fa-star";
+            one.style.color = "yellow";
+            one.className = "fa fa-star";
+            two.style.color = "yellow";
+            two.className = "fa fa-star";
+            four.style.color = "black";
+            four.className = "fa fa-star-o";
+            five.style.color = "black";
+            five.style.color = "black";
+            five.className = "fa fa-star-o".className = "fa fa-star-o";
+
+        }
+        else if (t.id == "4") {
+            t.className == "fa fa-star";
+            t.style.color = "yellow";
+            t.className = "fa fa-star";
+            one.style.color = "yellow";
+            one.className = "fa fa-star";
+            two.style.color = "yellow";
+            two.className = "fa fa-star";
+            three.style.color = "yellow";
+            three.className = "fa fa-star";
+            five.style.color = "black";
+            five.className = "fa fa-star-o".className = "fa fa-star-o";
+
+        }
+        else if (t.id == "5") {
+            t.className == "fa fa-star";
+            t.style.color = "yellow";
+            t.className = "fa fa-star";
+            one.style.color = "yellow";
+            one.className = "fa fa-star";
+            two.style.color = "yellow";
+            two.className = "fa fa-star";
+            three.style.color = "yellow";
+            three.className = "fa fa-star";
+            four.style.color = "yellow";
+            four.className = "fa fa-star";
+        }
+    }*@
+
+
+

@@ -1,0 +1,142 @@
+﻿
+@using Naras_Kitchen.Data
+@inject RecipeDbContext Context;
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Nara's Kitchen</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Home" asp-action="Home" style="color:white">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="About" style="color:white">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Contact" style="color:white">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Worldwide" style="color:white">Worldwide Recipes</a>
+                </li>
+
+                @{
+                    var userId = UserManager.GetUserId(User);
+                    var menus = Context.WeeklyMenus.Where(x => x.UserId == userId).ToList();
+                    var checkings = Context.Checkings.Where(x => x.UserId == UserManager.GetUserId(User)).ToList();
+
+                    var allInredients = 0;
+
+                    foreach (var menu in menus)
+                    {
+                        var recipe = new Recipe();
+                        recipe.Id = menu.RecipeId;
+                        menu.Recipe = recipe;
+                        //var recipeId = menu.Recipe.Id;
+                        var ingredients = Context.Ingredients.Where(x => x.RecipeId == recipe.Id).ToList();
+                        var ingredientsNum = ingredients.Count;
+                        allInredients = allInredients + ingredientsNum;
+                    }
+
+                    if (checkings.Count < allInredients)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="GetWeeklyMenu" style="color:red">My Weekly Menu <i class="fa fa-bell" aria-hidden="true"></i> </a>
+                        </li>
+
+                    }
+                   
+                    else if (checkings.Count == allInredients)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="GetWeeklyMenu" style="color:white">My Weekly Menu <i class="fa fa-bell" aria-hidden="true"></i> </a>
+                        </li>
+                      
+                    }
+
+
+                
+                }
+
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Users" asp-action="Overview" style="color:white">Admin Dashboard</a>
+                </li>
+
+            </ul>
+
+            <partial name="_LoginPartial" />
+        </div>
+    </nav>
+
+
+
+
+
+
+    @*<nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Nara's Kitchen</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Overview">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Worldwide">Worldwide Recipes</a></li>
+
+                    </ul>
+
+                    <partial name="_LoginPartial" />
+                </div>
+
+            </div>
+        </nav>*@
+
+    @*<partial name="_CookieConsentPartial" />*@
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2020 - Nara's Kitchen</p>
+        </footer>
+    </div>
+
+
+
+    @RenderSection("Scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

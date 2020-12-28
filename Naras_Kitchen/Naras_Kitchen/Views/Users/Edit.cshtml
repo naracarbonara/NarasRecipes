@@ -1,0 +1,42 @@
+﻿@model Naras_Kitchen.ViewModels.EditUserViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>EditUserViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Id" class="control-label"></label>
+                <input asp-for="@Model.Id" class="form-control" />
+                <span asp-validation-for="@Model.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserName" class="control-label"></label>
+                <input asp-for="@Model.UserName" class="form-control" />
+                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="@Model.isAdmin" /> @Html.DisplayNameFor(model => model.isAdmin)
+                    </label>
+                </div>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

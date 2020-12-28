@@ -1,0 +1,226 @@
+﻿@model Naras_Kitchen.ViewModels.RecipeWeeklyMenuViewModel
+@*<div style="display:flex; flex-direction:column; justify-content:center;">
+
+
+    <a class="btn btn-outline-success">Monday</a>
+    <a class="btn btn-outline-success">Tuesday</a>
+    <a class="btn btn-outline-success">Wednesday</a>
+    <a class="btn btn-outline-success">Thursday</a>
+    <a class="btn btn-outline-success">Friday</a>
+    <a class="btn btn-outline-success">Saturday</a>
+    <a class="btn btn-outline-success">Sunday</a>*@
+@using Microsoft.AspNetCore.Identity
+@using Naras_Kitchen.Helpers;
+@using Naras_Kitchen.Data
+@using Naras_Kitchen.Repositories
+@inject UserManager<IdentityUser> UserManager
+@inject RecipeDbContext Context;
+
+    <div class="form-group">
+
+
+        <table class="table" id="table" style="margin:2%;">
+            <thead>
+                <tr>
+
+                    <th scope="col">Day</th>
+                    <th scope="col">Recipe</th>
+
+                </tr>
+            </thead>
+            <tbody id="body">
+                <tr>
+                    <form asp-action="CreateMenu" method="post">
+
+                        <input asp-for="@Model.Id" name="recipeId" hidden />
+
+                        <td><input name="day" value="Monday" hidden />Monday</td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            var userId = UserManager.GetUserId(User);
+                            var user = await UserManager.GetUserAsync(User);
+
+                            var query = Context.WeeklyMenus.Where(x => x.UserId == userId && x.Day == "Monday").ToList();
+                           
+
+                            if (query.Count == 0)
+                            {
+                                <td><button type="submit" class="btn btn-outline-success">Add!</button></td>
+                            }
+
+                            else
+                            {
+                              
+                                var recipeId = query[0].RecipeId;
+                                var recipe = Context.Recipes.FirstOrDefault(x => x.Id == recipeId);
+                                var recipeTitle = recipe.Title;
+
+
+                                <td style="color:red">You have already added recipe: @recipeTitle to Monday</td>
+                            }
+                        }
+                    </form>
+                </tr>
+
+                <tr>
+                    <form asp-action="CreateMenu" method="post">
+                        <input asp-for="@Model.Id" name="recipeId" hidden />
+                        <td><input name="day" value="Tuesday" hidden />Tuesday</td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userId = UserManager.GetUserId(User);
+
+                            var query = Context.WeeklyMenus.Where(x => x.UserId == userId && x.Day == "Tuesday").ToList();
+                            if (query.Count == 0)
+                            {
+                                <td><button type="submit" class="btn btn-outline-success">Add!</button></td>
+                            }
+
+                            else
+                            {
+                                var recipeId = query[0].RecipeId;
+                                var recipe = Context.Recipes.FirstOrDefault(x => x.Id == recipeId);
+                                var recipeTitle = recipe.Title;
+
+
+                                <td style="color:red">You have already added recipe: @recipeTitle to Tuesday</td>
+                            }
+                        }
+                    </form>
+                </tr>
+                <tr>
+                    <form asp-action="CreateMenu" method="post">
+                        <input asp-for="@Model.Id" name="recipeId" hidden />
+                        <td><input name="day" value="Wednesday" hidden />Wednesday</td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userId = UserManager.GetUserId(User);
+
+                            var query = Context.WeeklyMenus.Where(x => x.UserId == userId && x.Day == "Wednesday").ToList();
+                            if (query.Count == 0)
+                            {
+                                <td><button type="submit" class="btn btn-outline-success">Add!</button></td>
+                            }
+
+                            else
+                            {
+                                var recipeId = query[0].RecipeId;
+                                var recipe = Context.Recipes.FirstOrDefault(x => x.Id == recipeId);
+                                var recipeTitle = recipe.Title;
+
+
+                                <td style="color:red">You have already added recipe: @recipeTitle to Wednesday</td>
+                            }
+                        }
+                    </form>
+                </tr>
+                <tr>
+                    <form asp-action="CreateMenu" method="post">
+                        <input asp-for="@Model.Id" name="recipeId" hidden />
+                        <td><input name="day" value="Thursday" hidden />Thursday</td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userId = UserManager.GetUserId(User);
+
+                            var query = Context.WeeklyMenus.Where(x => x.UserId == userId && x.Day == "Thursday").ToList();
+                            if (query.Count == 0)
+                            {
+                                <td><button type="submit" class="btn btn-outline-success">Add!</button></td>
+                            }
+
+                            else
+                            {
+                                var recipeId = query[0].RecipeId;
+                                var recipe = Context.Recipes.FirstOrDefault(x => x.Id == recipeId);
+                                var recipeTitle = recipe.Title;
+
+
+                                <td style="color:red">You have already added recipe: @recipeTitle to Thursday</td>
+                            }
+                        }
+                    </form>
+
+                </tr>
+                <tr>
+                    <form asp-action="CreateMenu" method="post">
+                        <input asp-for="@Model.Id" name="recipeId" hidden />
+                        <td><input name="day" value="Friday" hidden />Friday</td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userId = UserManager.GetUserId(User);
+
+                            var query = Context.WeeklyMenus.Where(x => x.UserId == userId && x.Day == "Friday").ToList();
+                            if (query.Count == 0)
+                            {
+                                <td><button type="submit" class="btn btn-outline-success">Add!</button></td>
+                            }
+
+                            else
+                            {
+                                var recipeId = query[0].RecipeId;
+                                var recipe = Context.Recipes.FirstOrDefault(x => x.Id == recipeId);
+                                var recipeTitle = recipe.Title;
+
+
+                                <td style="color:red">You have already added recipe: @recipeTitle to Friday</td>
+                            }
+                        }
+                    </form>
+                </tr>
+                <tr>
+                    <form asp-action="CreateMenu" method="post">
+                        <input asp-for="@Model.Id" name="recipeId" hidden />
+                        <td><input name="day" value="Saturday" hidden />Saturday</td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userId = UserManager.GetUserId(User);
+
+                            var query = Context.WeeklyMenus.Where(x => x.UserId == userId && x.Day == "Saturday").ToList();
+                            if (query.Count == 0)
+                            {
+                                <td><button type="submit" class="btn btn-outline-success">Add!</button></td>
+                            }
+
+                            else
+                            {
+                                var recipeId = query[0].RecipeId;
+                                var recipe = Context.Recipes.FirstOrDefault(x => x.Id == recipeId);
+                                var recipeTitle = recipe.Title;
+
+
+                                <td style="color:red">You have already added recipe: @recipeTitle to Saturday</td>
+                            }
+                        }
+                    </form>
+                </tr>
+                <tr>
+                    <form asp-action="CreateMenu" method="post">
+                        <input asp-for="@Model.Id" name="recipeId" hidden />
+                        <td><input name="day" value="Sunday" hidden />Sunday</td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userId = UserManager.GetUserId(User);
+
+                            var query = Context.WeeklyMenus.Where(x => x.UserId == userId && x.Day == "Sunday").ToList();
+                            if (query.Count == 0)
+                            {
+                                <td><button type="submit" class="btn btn-outline-success">Add!</button></td>
+                            }
+
+                            else
+                            {
+                                var recipeId = query[0].RecipeId;
+                                var recipe = Context.Recipes.FirstOrDefault(x => x.Id == recipeId);
+                                var recipeTitle = recipe.Title;
+
+
+                                <td style="color:red">You have already added recipe: @recipeTitle to Sunday</td>
+                            }
+                        }
+                    </form>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>

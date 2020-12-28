@@ -1,0 +1,133 @@
+﻿@model List<Naras_Kitchen.ViewModels.RecipeViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Overview";
+}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                By Type
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item">Grill</a>
+                <a class="dropdown-item">Pastry</a>
+                <a class="dropdown-item">Salad</a>
+                <a class="dropdown-item">Dessert</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                By County
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" asp-action="OverviewCountryRelated" asp-route-country="Asia" style="cursor:pointer">Asian</a>
+                <a class="dropdown-item" asp-action="OverviewCountryRelated" asp-route-country="Balkan" style="cursor:pointer">Balkan</a>
+                <a class="dropdown-item" asp-action="OverviewCountryRelated" asp-route-country="Germany" style="cursor:pointer">German</a>
+                <a class="dropdown-item" asp-action="OverviewCountryRelated" asp-route-country="Italy" style="cursor:pointer">Italian</a>
+                <a class="dropdown-item" asp-action="OverviewCountryRelated" asp-route-country="Mediteran" style="cursor:pointer">Mediterranean</a>
+
+            </div>
+        </li>
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0" asp-action="Overview" asp-controller="Home">
+        <input name="Title" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+
+
+
+</nav>
+
+@if (Model.Count == 0)
+{
+    <h3>No results found</h3>
+}
+else
+{
+    <h3 style="text-align:center;font-family: 'Satisfy', cursive;">Recipes of @Model[0].Country</h3>
+
+}
+
+
+<div class="row">
+    @foreach (var recipe in Model)
+    {
+        <div class="col-md-4 d-flex align-items-stretch" style="margin-top:2%; max-height:600px;">
+            <div class="card">
+
+                <img class="card-img-top" src="@recipe.ImageUrl" alt="Card image cap" style="max-height:50%; ">
+
+
+                <div class="card-body">
+                    <h4 class="card-title">@recipe.Title</h4>
+                    <h5 class="card-title">@recipe.Type</h5>
+                    <h6 class="card-title">@recipe.Country</h6>
+                    <p class="card-text" style="font-size:12px;">@recipe.Description</p>
+
+                    <a asp-action="Detailss" asp-route-id="@recipe.Id" class="btn btn-outline-success">See Details</a>
+
+                    @if (recipe.Ingredients == null)
+                    {
+                        <a asp-action="CreateIngredient" asp-route-recipeId="@recipe.Id" class="btn btn-outline-success">Add Ingredients</a>
+                    }
+
+                    <br />
+                    <div style="display:flex;justify-content:flex-start; margin-top:5%">
+                        @if (recipe.AvgRating > 1.5)
+                        {
+                            <i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer"></i>
+
+                        }
+                        @if (recipe.AvgRating >= 1.5)
+                        {
+                            <i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer"></i>
+
+                        }
+                        @if (recipe.AvgRating >= 2.5)
+                        {
+                            <i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer"></i>
+
+                        }
+                        @if (recipe.AvgRating >= 3.5)
+                        {
+                            <i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer"></i>
+
+                        }
+                        @if (recipe.AvgRating >= 4.5)
+                        {
+                            <i class="fa fa-star" aria-hidden="true" style="cursor:pointer;color:yellow"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star-o" aria-hidden="true" style="cursor:pointer"></i>
+
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

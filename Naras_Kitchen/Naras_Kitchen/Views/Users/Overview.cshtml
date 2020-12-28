@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<Naras_Kitchen.ViewModels.UserOverviewViewModel>
+
+@inject UserManager<IdentityUser> UserManager;
+@{
+    ViewData["Title"] = "Overview";
+}
+
+
+
+<h2>Overview</h2>
+
+<p>
+    <a asp-action="Create" asp-controller="Users">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Username
+            </th>
+
+            <th>
+                is Admin
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Username
+                </td>
+
+                <td>
+                    @if (item.isAdmin == true)
+                    {
+                        <input type="checkbox" checked>
+                    }
+                    else
+                    {
+                        <input type="checkbox">
+                    }
+
+                </td>
+                <td>
+                    @if (item.isAdmin)
+                    {
+                        <a class="btn btn-primary" asp-controller="Users" asp-action="EditUserRole" asp-route-id="@item.Id">Change role to User</a>
+
+                    }
+                    else
+                    {
+                        <a class="btn btn-success" asp-controller="Users" asp-action="EditUserRole" asp-route-id="@item.Id">Change role to Admin</a>
+
+                    }
+                    <a class="btn btn-primary" asp-controller="Users" asp-action="Edit" asp-route-id="@item.Id">Edit User</a>
+                    <a class="btn btn-danger" asp-controller="Users" asp-action="Delete" asp-route-id="@item.Id">Delete User</a>
+                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

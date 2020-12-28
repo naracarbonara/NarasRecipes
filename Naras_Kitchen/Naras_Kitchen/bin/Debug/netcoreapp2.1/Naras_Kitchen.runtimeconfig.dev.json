@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Zoki\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Zoki\\.nuget\\packages"
+    ]
+  }
+}

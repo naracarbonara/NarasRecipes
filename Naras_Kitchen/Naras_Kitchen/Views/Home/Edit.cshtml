@@ -1,0 +1,229 @@
+﻿@model Naras_Kitchen.ViewModels.EditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>EditViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Id" class="control-label"></label>
+                <input asp-for="@Model.Id" class="form-control" type="hidden" />
+                <span asp-validation-for="@Model.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Title" class="control-label"></label>
+                <input asp-for="@Model.Title" class="form-control" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Directions" class="control-label"></label>
+                <input asp-for="@Model.Directions" class="form-control" />
+                <span asp-validation-for="@Model.Directions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Description" class="control-label"></label>
+                <input asp-for="@Model.Description" class="form-control" />
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ImageUrl" class="control-label"></label>
+                <input asp-for="@Model.ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Country" class="control-label"></label>
+                <input asp-for="@Model.Country" class="form-control" />
+                <span asp-validation-for="@Model.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Type" class="control-label"></label>
+                <input asp-for="@Model.Type" class="form-control" />
+                <span asp-validation-for="@Model.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserId" class="control-label"></label>
+                <input asp-for="@Model.UserId" class="form-control" type="hidden" />
+                <span asp-validation-for="@Model.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Overview">Back to List</a>
+</div>
+
+<script>
+    function addIngredient() {
+        //var button = document.getElementById("finishButton");
+        //button.style.color = "white";
+        //button.innerText="Finish Ingredients!"
+
+        var body = document.getElementById("body");
+        var row = document.createElement("tr");
+        var dataNum = document.createElement("td");
+        var dataIng = document.createElement("td");
+        var dataQuant = document.createElement("td");
+        var dataDel = document.createElement("td");
+        body.appendChild(row);
+        row.appendChild(dataNum);
+        row.appendChild(dataIng);
+        row.appendChild(dataQuant);
+        row.appendChild(dataDel);
+        var inputIng = document.createElement("input");
+        var inputQuant = document.createElement("input");
+        var icon = document.createElement("i");
+        icon.className = "fa fa-trash";
+        icon.style.cursor = "pointer";
+        icon.onclick = function (e) {
+            var t = e.target;
+            var data = t.parentElement;
+            var row = data.parentElement;
+            row.remove();
+        }
+
+
+        dataDel.appendChild(icon);
+        dataIng.appendChild(inputIng);
+        dataQuant.appendChild(inputQuant);
+
+        var previousRow = row.previousElementSibling;
+        var value = 0;
+        if (previousRow == null) {
+            value = 0
+        }
+        else {
+            value = previousRow.firstElementChild.innerText;
+        }
+
+        dataNum.innerText = (parseInt(value) + 1).toString();
+
+    }
+
+    function convertToString() {
+        //var t = e.target;
+        var ingredients = "";
+        var table = document.getElementById("table");
+        var totalRowCount = table.rows.length;
+
+        var currentRow = table.firstElementChild.nextElementSibling.firstElementChild;
+        for (var i = 1; i < totalRowCount; i++) {
+            ingredients = ingredients + currentRow.firstElementChild.nextElementSibling.firstElementChild.value.toString() + "-" + currentRow.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.value.toString() + ';'
+            currentRow = currentRow.nextElementSibling;
+        }
+
+
+
+        console.log(ingredients);
+
+        var elem = document.getElementById("s1");
+        elem.value = ingredients;
+        //t.style.color = "yellow"
+        //t.innerText = "Finished!"
+    }
+
+
+    function convertStringToTable() {
+        var array = [];
+        var ingredient = '';
+        var quantity = '';
+        var stringElement = document.getElementById("ingredients");
+        var stringValue = stringElement.value;
+
+        for (var m = 0; m < stringValue.length; m++) {
+            array.push(stringValue[m]);
+        }
+
+
+        //console.log(array);
+        var occurence = stringValue.split(";").length - 1;
+        //console.log(occurence);
+        //for (var i = 0; i < occurence; i++)
+        //{
+            for (var j = 0; j < array.length; j++)
+            {
+                while (array[j] != '-')
+                {
+                    ingredient = ingredient + array[j];
+
+                }
+
+
+
+            }
+            console.log(array);
+            console.log(ingredient);
+        //}
+
+
+
+        //var body = document.getElementById("body");
+
+
+
+        //for (var i = 0; i < occurence; i++)
+        //{
+        //    var row = document.createElement("tr");
+        //   var dataNum = document.createElement("td");
+        //    var dataIng = document.createElement("td");
+        //    var dataQuant = document.createElement("td");
+        //    var dataDel = document.createElement("td");
+        //    body.appendChild(row);
+        //    row.appendChild(dataNum);
+        //    row.appendChild(dataIng);
+        //    row.appendChild(dataQuant);
+        //  row.appendChild(dataDel);
+        //   var icon = document.createElement("i");
+        //  icon.className = "fa fa-trash";
+        //    icon.style.cursor = "pointer";
+        //    icon.onclick = function (e) {
+        //                   var t = e.target;
+        //                    var data = t.parentElement;
+        //                    var row = data.parentElement;
+        //                    row.remove();
+        //                                    }
+
+
+        //    dataDel.appendChild(icon);
+        //    var stringIng = '';
+        //    var stringQuan = '';
+
+        //    for (var j = 0; j < array.length; j++)
+        //    {
+        //        while (array[j] != '-')
+        //        {
+        //            stringIng = stringIng + array[j];
+        //            array.splice(array[j], 1);
+        //        }
+        //    }
+        //    dataIng.innerText = stringIng;
+
+        //        for (var k = 0; k < array.length; k++)
+        //    {
+        //        while (array[k] != ';')
+        //        {
+        //            stringQuan = stringQuan + array[k];
+        //            array.splice(array[k], 1);
+        //        }
+        //    }
+        //    dataQuant.innerText = stringQuan;
+
+        //}
+}
+
+</script>
+
+
+
+

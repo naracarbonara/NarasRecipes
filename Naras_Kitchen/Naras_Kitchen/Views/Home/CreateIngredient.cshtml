@@ -1,0 +1,114 @@
+﻿@model Naras_Kitchen.ViewModels.CreateRecipeViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "CreateIngredient";
+}
+
+<h2>CreateIngredient</h2>
+
+<h4>IngredientViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateIngredient" method="post">
+            <div class="form-group">
+                @*<label asp-for="@Model.Ingredients" class="control-label"></label> <br />*@
+                <div class="form-group">
+                    <input asp-for="@Model.Id" class="form-control" hidden name="recipeId" />
+                    <span asp-validation-for="@Model.Id" class="text-danger"></span>
+                </div>
+                <a class="btn btn-success" onclick="addIngredient()">+</a> <b>Add Ingredient</b>
+                <br />
+
+
+                <table class="table" id="table" style="margin:2%;">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ingredient</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body">
+                    </tbody>
+                </table>
+
+        </form>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+
+
+    function addIngredient() {
+        //var button = document.getElementById("finishButton");
+        //button.style.color = "white";
+        //button.innerText="Finish Ingredients!"
+
+        var body = document.getElementById("body");
+        var row = document.createElement("tr");
+        var dataNum = document.createElement("td");
+        var dataIng = document.createElement("td");
+        var dataQuant = document.createElement("td");
+        var dataValidate = document.createElement("td");
+        var dataDel = document.createElement("td");
+
+        body.appendChild(row);
+        row.appendChild(dataNum);
+        row.appendChild(dataIng);
+        row.appendChild(dataQuant);
+        row.appendChild(dataValidate);
+        row.appendChild(dataDel);
+        var inputIng = document.createElement("input");
+        inputIng.name = "ingredient";
+        var inputQuant = document.createElement("input");
+        inputQuant.name = "quantity"
+        var buttonValidate = document.createElement("button");
+        buttonValidate.type = "submit";
+        buttonValidate.className = "btn btn-success";
+
+        var text = document.createTextNode("Validate Ingredient");
+        buttonValidate.appendChild(text)
+        var icon = document.createElement("i");
+        icon.className = "fa fa-trash";
+        icon.style.cursor = "pointer";
+        icon.onclick = function (e) {
+            var t = e.target;
+            var data = t.parentElement;
+            var row = data.parentElement;
+            row.remove();
+        }
+
+        dataValidate.appendChild(buttonValidate);
+        dataDel.appendChild(icon);
+        dataIng.appendChild(inputIng);
+        dataQuant.appendChild(inputQuant);
+
+        var previousRow = row.previousElementSibling;
+        var value = 0;
+        if (previousRow == null) {
+            value = 0
+        }
+        else {
+            value = previousRow.firstElementChild.innerText;
+        }
+
+        dataNum.innerText = (parseInt(value) + 1).toString();
+
+    }
+
+    
+</script>
+
+
+

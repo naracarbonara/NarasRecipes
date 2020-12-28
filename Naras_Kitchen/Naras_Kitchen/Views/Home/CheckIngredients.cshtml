@@ -1,0 +1,40 @@
+﻿@model Naras_Kitchen.ViewModels.DetailsViewModel
+@{
+    // ViewData["Title"] = "CheckIngredients";
+   
+}
+@using Naras_Kitchen.Data
+@inject RecipeDbContext Context;
+
+<h2>Check Ingredients</h2>
+
+@foreach (var ingredient in Model.Ingredients)
+{
+    var urlAdd = Url.Action("AddChecking", "Checking", new { ingredientid = ingredient.Id });
+    var urlRemove = Url.Action("RemoveChecking", "Checking", new { ingredientid = ingredient.Id });
+    //var ingredien = Context.Ingredients.FirstOrDefault(x => x.Id == ingredient.Id);
+    var checking = Context.Checkings.FirstOrDefault(x => x.IngredientId == ingredient.Id);
+    if (checking == null)
+    {
+
+      <form action="/action_page.php">
+
+         <input type="checkbox" id="ingredient" onclick="window.location='@urlAdd'">
+            <label for="ingredient"> @ingredient.Name  -  @ingredient.Quantity </label>
+        </form>
+
+    }
+    else
+    {
+        <form action="/action_page.php">
+             <input type="checkbox" id="ingredient" checked onclick="window.location='@urlRemove'">
+        <label for="ingredient"> @ingredient.Name  - @ingredient.Quantity </label>
+        </form>
+
+    }
+
+}
+<div>
+    
+    <a asp-action="GetWeeklyMenu">Back to List</a>
+</div>
